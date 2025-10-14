@@ -1,0 +1,93 @@
+@font-face {
+    font-family: lilita;
+    src: url(Fonts/LilitaOne-Regular.ttf);
+}
+@font-face {
+    font-family: breeSerif;
+    src: url(Fonts/BreeSerif-Regular.ttf);
+}
+
+body{
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+
+    grid-template-rows: repeat(20, 1fr);
+    grid-template-columns: repeat(20, 1fr);
+    grid-gap: 0;
+    overflow: hidden;
+
+    background-color: #f3cbb4;
+}
+
+/* Flashcard itself */
+#flashcard{
+    background-color: rgb(24, 138, 204);
+    grid-area: 4 / 4/ 17/ 17;
+    border-radius: 5%;
+    border-width: 7px;
+    border-style: solid;
+    border-color: rgb(144, 241, 209);
+    padding: 5%;
+    padding-bottom: 0%;
+    position:relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+
+
+    scrollbar-color: transparent transparent;
+}
+#flashcardQuestion{
+    color: white;
+    text-align: center;
+    font-family: breeSerif;
+    font-size: 2em;
+}
+
+/* Tick and X */
+#choices{
+    grid-area: 18 / 8 / 20 / 13;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.choice{
+    font-size: 2em;
+    font-family: lilita;
+    border-radius: 100%;
+    width: 8vh;
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border: solid;
+    border-width: 3px;
+    user-select: none;
+
+    transition: scale 0.1s ease-out;
+}
+.choice:hover{
+    scale: 120%;
+}
+#tick{
+    background-color: green;
+    border-color: rgb(134, 180, 64);
+}
+#tick:active{
+    background-color: rgb(134, 180, 64);
+    border-color: green;
+    scale: 115%;
+}
+#ex{
+    background-color: red;
+    border-color: rgb(206, 63, 63);
+}
+#ex:active{
+    background-color: rgb(206, 63, 63);
+    border-color: red;
+    scale: 115%;
+}
