@@ -29,22 +29,42 @@ body{
     border-style: solid;
     border-color: rgb(144, 241, 209);
     padding: 5%;
-    padding-bottom: 0%;
     position:relative;
 
     display: flex;
-    align-items: center;
     justify-content: center;
     overflow: auto;
+    box-sizing: border-box;
 
+    transition: transform 0.3s linear;
 
     scrollbar-color: transparent transparent;
+    
 }
-#flashcardQuestion{
+/* When flashcard is flipped, this changes properties */
+#flashcard.flipped{
+   transform: rotateY(360deg);
+   transition: transform 0.3s linear;
+}
+.flashcardText{
     color: white;
     text-align: center;
     font-family: breeSerif;
     font-size: 2em;
+    margin: 0%;
+    padding-bottom: 5%;
+    vertical-align: middle;
+}
+#flashcardQuestion{
+    display: block;
+}
+#flashcardAnswer{
+    display: none;
+}
+#innerFlashcard{
+    display: block;
+    width: 100%;
+    text-align: center;
 }
 
 /* Tick and X */
