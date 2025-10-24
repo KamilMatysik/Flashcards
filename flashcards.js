@@ -1,6 +1,9 @@
 flashcard = document.getElementById("flashcard");
 var cardFlipTime = 150
 
+tick = document.getElementById("tick");
+ex = document.getElementById("ex");
+
 flashcard.addEventListener("click", function(){
     if(flashcard.classList.contains("flipped")){
         flashcard.classList.remove("flipped")
@@ -18,3 +21,12 @@ flashcard.addEventListener("click", function(){
     }
 });
 
+tick.addEventListener("click", function(){
+    flashcard.style.transform = "translateX(-200%)";
+    bringNextCard();
+});
+
+ex.addEventListener("click", function(){
+    flashcard.style.transform = "translateX(200%)";
+    bringNextCard();
+});

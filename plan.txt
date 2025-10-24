@@ -1,3 +1,9 @@
 a flashcards page that can be updated through json file, where the user will have a question and can click to see the answer of that question
 there will be a tick or x, which will be clicked depending on if they know it or not (personally chosen)
 want a quixlet like animation of it moving left when answered and at end, repeat the ones user didnt kmow until they are all known
+
+
+
+On click of x or tick, the card goes left or right,
+after this a new card will come down from above
+Have the card above store the details of the next card

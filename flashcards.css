@@ -7,6 +7,7 @@
     src: url(Fonts/BreeSerif-Regular.ttf);
 }
 
+
 body{
     display: grid;
     width: 100vw;
@@ -29,17 +30,14 @@ body{
     border-style: solid;
     border-color: rgb(144, 241, 209);
     padding: 5%;
-    position:relative;
 
-    display: flex;
-    justify-content: center;
+    display: grid;
+    place-items: center;
     overflow: auto;
-    box-sizing: border-box;
 
     transition: transform 0.3s linear;
 
     scrollbar-color: transparent transparent;
-    
 }
 /* When flashcard is flipped, this changes properties */
 #flashcard.flipped{
@@ -53,7 +51,7 @@ body{
     font-size: 2em;
     margin: 0%;
     padding-bottom: 5%;
-    vertical-align: middle;
+
 }
 #flashcardQuestion{
     display: block;
@@ -61,11 +59,7 @@ body{
 #flashcardAnswer{
     display: none;
 }
-#innerFlashcard{
-    display: block;
-    width: 100%;
-    text-align: center;
-}
+
 
 /* Tick and X */
 #choices{
