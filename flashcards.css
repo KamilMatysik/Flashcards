@@ -22,9 +22,9 @@ body{
 }
 
 /* Flashcard itself */
-#flashcard{
+
+.flashcard{
     background-color: rgb(24, 138, 204);
-    grid-area: 4 / 4/ 17/ 17;
     border-radius: 5%;
     border-width: 7px;
     border-style: solid;
@@ -35,14 +35,23 @@ body{
     place-items: center;
     overflow: auto;
 
-    transition: transform 0.3s linear;
 
     scrollbar-color: transparent transparent;
 }
+
+#mainFlashcard{
+    grid-area: 4 / 4/ 17/ 17;
+    transition: transform 0.25s linear;
+}
+#nextFlashcard{
+    grid-area:1 / 4 / 13 / 17;
+    transform: translateY(-102%);
+    transition: transform 0.25s linear;
+}
 /* When flashcard is flipped, this changes properties */
-#flashcard.flipped{
+#mainFlashcard.flipped{
    transform: rotateY(360deg);
-   transition: transform 0.3s linear;
+   transition: transform 0.25s linear;
 }
 .flashcardText{
     color: white;
@@ -53,10 +62,10 @@ body{
     padding-bottom: 5%;
 
 }
-#flashcardQuestion{
+#mainFlashcardQuestion{
     display: block;
 }
-#flashcardAnswer{
+#mainFlashcardAnswer{
     display: none;
 }
 
