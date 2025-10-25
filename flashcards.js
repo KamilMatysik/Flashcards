@@ -1,6 +1,18 @@
-flashcard = document.getElementById("mainFlashcard");
+async function loadFlashcards(){
+    response = await fetch("sample.json")
+    data = await response.json()
+    flashcardSet = data.flashcardSet
+    current = 0
+    document.getElementById("mainFlashcardQuestion").textContent = flashcardSet[current].question
+    document.getElementById("mainFlashcardAnswer").textContent = flashcardSet[current].answer
+    assignQA()
+}
+loadFlashcards()
+
+flashcard = document.getElementById("mainFlashcard")
 var cardFlipTime = 150
 addFlashcardClick()
+
 
 tick = document.getElementById("tick");
 ex = document.getElementById("ex");
@@ -58,6 +70,8 @@ function lowerCard(){
     document.getElementById("nextFlashcard").id = "mainFlashcard"
     document.getElementById("nextFlashcardAnswer").id = "mainFlashcardAnswer"
     document.getElementById("nextFlashcardQuestion").id = "mainFlashcardQuestion"
+    
+    current++
     flashcard = document.getElementById("mainFlashcard");
     flashcard.style.transform = "translateY(0%)"
 
@@ -66,6 +80,7 @@ function lowerCard(){
 
     addFlashcardClick()
     createNextCard()
+    assignQA()
 }
 
 function createNextCard(){
@@ -75,9 +90,14 @@ function createNextCard(){
     newFlashcard.classList.add("flashcard")
     newFlashcard.innerHTML = `
         <div>
-            <p id="nextFlashcardQuestion" class="flashcardText">Extra q</p>
-            <p id="nextFlashcardAnswer" class="flashcardText">extra a</p>
+            <p id="nextFlashcardQuestion" class="flashcardText"></p>
+            <p id="nextFlashcardAnswer" class="flashcardText"></p>
         </div>`
 
     document.body.append(newFlashcard)
+}
+
+function assignQA(){
+    document.getElementById("nextFlashcardQuestion").textContent = flashcardSet[current+1].question
+    document.getElementById("nextFlashcardAnswer").textContent = flashcardSet[current+1].answer
 }
