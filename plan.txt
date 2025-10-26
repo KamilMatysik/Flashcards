@@ -7,3 +7,8 @@ want a quixlet like animation of it moving left when answered and at end, repeat
 On click of x or tick, the card goes left or right,
 after this a new card will come down from above
 Have the card above store the details of the next card
+
+26.10.25:
+    want to have a counter of how many cards there are and keep track of how many cards the user has sent both ways
+    also when they reach the end, pop up a screen saying its the end
+    in the future add atleast 2 buttons here - restart fully, practice those u got wrong

@@ -33,7 +33,10 @@ body{
 
     display: grid;
     place-items: center;
+
+    word-break: break-word;
     overflow: auto;
+    white-space: normal;
 
 
     scrollbar-color: transparent transparent;
@@ -68,7 +71,14 @@ body{
 #mainFlashcardAnswer{
     display: none;
 }
+.flashcardCounter{
+    color: white;
+    font-family: breeSerif;
+    margin-top: 0;
+    text-align: center;
 
+
+}
 
 /* Tick and X */
 #choices{
@@ -113,4 +123,37 @@ body{
     background-color: rgb(206, 63, 63);
     border-color: red;
     scale: 115%;
+}
+
+/* Left and right counters */
+#leftRightCounters{
+    grid-area: 17 / 4 / 20 / 17;
+    display: grid;
+    grid-template-rows: repeat(20,1fr);
+    grid-template-columns: repeat(20, 1fr);
+    pointer-events: none;
+}
+.leftRightCounters{
+    border-radius: 30%;
+    border-width: 3px;
+    border-style: solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    max-width: 100px;
+}
+#leftCounter{
+    grid-area: 4 / 1 / 18 / 4;
+    background-color: rgb(134, 180, 64);
+    border-color: green;
+    font-family: lilita;
+    font-size: 2em;
+}
+#rightCounter{
+    grid-area: 4 / 18 / 18 / 21;
+    background-color: rgb(206, 63, 63);
+    border-color: red;
+    font-family: lilita;
+    font-size: 2em;
 }
