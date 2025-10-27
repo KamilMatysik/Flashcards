@@ -19,7 +19,8 @@ addFlashcardClick()
 let correctCards = 0
 let incorrectCards = 0
 
-
+noNext = false
+dontCreateNew = false
 tick = document.getElementById("tick");
 ex = document.getElementById("ex");
 
@@ -87,26 +88,37 @@ function removeCard(){
 
 //Lowers next card plus makes it the main card
 function lowerCard(){
+    current++
+    checkForLast()
+
+    if(noNext){
+        endScreen()
+        return
+    }
+
     document.getElementById("nextFlashcard").id = "mainFlashcard"
     document.getElementById("nextFlashcardAnswer").id = "mainFlashcardAnswer"
     document.getElementById("nextFlashcardQuestion").id = "mainFlashcardQuestion"
     
-    current++
+    
+    
     flashcard = document.getElementById("mainFlashcard");
     flashcard.style.transform = "translateY(0%)"
-
     flashcard.style.removeProperty("transform");
     flashcard.style.transition = "transform 0.25s linear";
-
     flashcardCounter()
     addFlashcardClick()
-    createNextCard()
-    assignQA()
+    if(!dontCreateNew){
+        createNextCard()
+        assignQA()
+    }
+        
 }
 
 //Creates the next card that will come down
 function createNextCard(){
     newFlashcard = document.createElement("div")
+    dontCreateNew = false
 
     newFlashcard.id = "nextFlashcard"
     newFlashcard.classList.add("flashcard")
@@ -128,4 +140,13 @@ function assignQA(){
 
 function flashcardCounter(){
     document.querySelector(".flashcardCounter").textContent = `- ${current+1} / ${flashcardSet.length} -`
+}
+
+function checkForLast(){
+    if(current == flashcardSet.length-1){
+        noNext = true
+    }
+    if(current == flashcardSet.length-2){
+        dontCreateNew = true
+    }
 }
