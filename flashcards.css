@@ -7,6 +7,19 @@
     src: url(Fonts/BreeSerif-Regular.ttf);
 }
 
+/* Naming some variables */
+:root{
+    /* Colors */
+    --tickColor1: green;
+    --tickColor2: rgb(134, 180, 64);
+    --exColor1: red;
+    --exColor2: rgb(206, 63, 63);
+    --endScreenCompliment: rgb(226, 223, 223);
+
+    /* Transitions */
+    --endDisappear: opacity 0.5s linear;
+}
+
 
 body{
     display: grid;
@@ -24,6 +37,7 @@ body{
 /* Flashcard itself */
 
 .flashcard{
+
     background-color: rgb(24, 138, 204);
     border-radius: 5%;
     border-width: 7px;
@@ -40,6 +54,9 @@ body{
 
 
     scrollbar-color: transparent transparent;
+
+    /* TEMPORARY FOR TESTS, REMOVE LATER */
+    opacity: 0;
 }
 
 #mainFlashcard{
@@ -101,27 +118,28 @@ body{
     border-width: 3px;
     user-select: none;
 
+    transition: var(--endDisappear);
     transition: scale 0.1s ease-out;
 }
 .choice:hover{
     scale: 120%;
 }
 #tick{
-    background-color: green;
-    border-color: rgb(134, 180, 64);
+    background-color: var(--tickColor1);
+    border-color: var(--tickColor2);
 }
 #tick:active{
-    background-color: rgb(134, 180, 64);
-    border-color: green;
+    background-color: var(--tickColor2);
+    border-color: var(--tickColor1);
     scale: 115%;
 }
 #ex{
-    background-color: red;
-    border-color: rgb(206, 63, 63);
+    background-color: var(--exColor1);
+    border-color: var(--exColor2);
 }
 #ex:active{
-    background-color: rgb(206, 63, 63);
-    border-color: red;
+    background-color: var(--exColor2);
+    border-color: var(--exColor1);
     scale: 115%;
 }
 
@@ -142,18 +160,63 @@ body{
     justify-content: center;
     color: white;
     max-width: 100px;
+
+    transition: var(--endDisappear);
 }
 #leftCounter{
     grid-area: 4 / 1 / 18 / 4;
-    background-color: rgb(134, 180, 64);
-    border-color: green;
+    background-color: var(--tickColor2);
+    border-color: var(--tickColor1);
     font-family: lilita;
     font-size: 2em;
 }
 #rightCounter{
     grid-area: 4 / 18 / 18 / 21;
-    background-color: rgb(206, 63, 63);
-    border-color: red;
+    background-color: var(--exColor2);
+    border-color: var(--exColor1);
     font-family: lilita;
     font-size: 2em;
+}
+
+/* End Screen */
+#endScreen{
+    display: block;
+    background-color: rgb(65, 63, 63);
+    width: 75%;
+    height: 75%;
+    left: 12.5%;
+    top: 12.5%;
+    z-index: -1;
+
+    border-radius: 10%;
+    border: 5px solid var(--endScreenCompliment);
+
+    position: fixed;
+}
+#endScreenTopBar{
+    background-color: var(--endScreenCompliment);
+    z-index: 1;
+    
+    width: 100%;
+    height: 20%;
+    border-top-left-radius: 4em;
+    border-top-right-radius: 4em;
+}
+#curveBorderJoin{
+    background-color: rgb(65, 63, 63);
+    width: 75%;
+    height: 5%;
+    position: fixed;
+    right: 12%;
+    top: 23%;
+    border-top-left-radius: 4em;
+    border-top-right-radius: 4em;
+}
+#setFinishedText{
+    text-align: center;
+    margin: 0;
+    padding-top: 3%;
+    font-family: breeSerif;
+    font-size: 2em;
+    color: rgb(65, 63, 63);
 }

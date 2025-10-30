@@ -63,7 +63,7 @@ function addFlashcardClick(){
 tick.addEventListener("click", function(){
     flashcard.style.transform = "translateX(-200%)";
     correctCards++
-    document.getElementById("leftCounter").textContent = correctCards
+    document.getElementById("leftCounter").textContent = correctCards   
     setTimeout(() => {
         removeCard();
         lowerCard();
@@ -152,6 +152,6 @@ function checkForLast(){
 }
 
 function endScreen(){
-    document.getElementById("choices").style.display = "none"
-    document.getElementById("leftRightCounters").style.display = "none"
+    document.getElementById("choices").style.opacity = "0%"
+    document.getElementById("leftRightCounters").style.opacity = "0%"
 }
