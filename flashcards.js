@@ -143,10 +143,15 @@ function flashcardCounter(){
 }
 
 function checkForLast(){
-    if(current == flashcardSet.length-1){
+    if(current == flashcardSet.length){
         noNext = true
     }
-    if(current == flashcardSet.length-2){
+    if(current == flashcardSet.length){
         dontCreateNew = true
     }
+}
+
+function endScreen(){
+    document.getElementById("choices").style.display = "none"
+    document.getElementById("leftRightCounters").style.display = "none"
 }
