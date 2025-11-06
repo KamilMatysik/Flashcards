@@ -154,4 +154,39 @@ function checkForLast(){
 function endScreen(){
     document.getElementById("choices").style.opacity = "0%"
     document.getElementById("leftRightCounters").style.opacity = "0%"
+    let endScreen = document.getElementById("endScreen")
+    endScreen.style.opacity = "100%"
+    endScreen.style.pointerEvents = "all"
 }
+
+
+
+//Code For Choosing Flashcard File
+async function chooseFlashcardLoad(){
+    try{
+        const response = await fetch("http://127.0.0.1:5000/data")
+        if (!response.ok) throw new Error("Response Error")
+        const jsonData = await response.json()
+        addFlashcardsToList(jsonData)
+    } catch (error) {
+        console.error("Error fetching data: ", error)
+    }
+}
+
+function addFlashcardsToList(data){
+    for (let i = 0; i < 100; i++){
+        currentFile = data["index"+String(i+1)]
+        currentFileName = currentFile.split(".")[0]
+        currentFileName = currentFileName.charAt(0).toUpperCase() + currentFileName.slice(1)
+
+        //After this, we have the name of the file ready to be put into html
+        flashcardList = document.getElementById("chooseFlashcardList")
+        flashcardList.innerHTML +=`<p id="flashcardID${i}">${currentFileName}</p>`
+    }
+}
+
+document.getElementById("chooseFlashcardList").addEventListener("click", function(event){
+    fileToChooseIndex = event.target.id
+
+    console.log(fileToChooseIndex)
+})

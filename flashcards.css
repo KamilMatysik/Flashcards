@@ -17,7 +17,9 @@
     --endScreenCompliment: rgb(226, 223, 223);
 
     /* Transitions */
-    --endDisappear: opacity 0.5s linear;
+    --endDisappear: opacity 0.3s linear;
+    --chooseFlashcardHColor: background-color 0.1s ease-out;
+    --chooseFlashcardHScale: scale 0.1s ease-out;
 }
 
 
@@ -55,8 +57,7 @@ body{
 
     scrollbar-color: transparent transparent;
 
-    /* TEMPORARY FOR TESTS, REMOVE LATER */
-    opacity: 0;
+
 }
 
 #mainFlashcard{
@@ -103,6 +104,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: var(--endDisappear);
 }
 .choice{
     font-size: 2em;
@@ -150,6 +152,7 @@ body{
     grid-template-rows: repeat(20,1fr);
     grid-template-columns: repeat(20, 1fr);
     pointer-events: none;
+    transition: var(--endDisappear)
 }
 .leftRightCounters{
     border-radius: 30%;
@@ -180,6 +183,9 @@ body{
 
 /* End Screen */
 #endScreen{
+    opacity: 0;
+    pointer-events: none;
+
     display: block;
     background-color: rgb(65, 63, 63);
     width: 75%;
@@ -193,6 +199,7 @@ body{
     border-top: none;
 
     position: fixed;
+    transition: var(--endDisappear);
 
     border-top-left-radius: 5em;
     border-top-right-radius: 5em;
@@ -242,8 +249,57 @@ body{
 
     padding-top: 3.5%;
 
-    transition: background-color 0.1s linear;
+    transition: var(--endDisappear);
 }
 .endScreenChoices:hover{
     background-color: rgb(114, 108, 108);
+}
+
+
+/* Choose Flashcard Set CSS */
+#chooseFlashcardsWhole{
+    background-color: rgb(109, 106, 106);
+
+    margin-left: 12.5vw;
+    width: 75vw;
+    height: 85vh;
+    margin-top: 7.5vh;
+
+    border: 5px solid rgb(36, 35, 35);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#chooseFlashcardTitle{
+    text-align: center;
+    font-family: breeSerif;
+    font-size: 2em;
+}
+#chooseFlashcardList{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#chooseFlashcardList > p{
+    background-color: rgb(142, 145, 144);
+    width: 100%;
+    text-align: center;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    font-family: breeSerif;
+    font-size: 1.2em;
+    margin: 0;
+    
+
+    transition: var(--chooseFlashcardHColor), var(--chooseFlashcardHScale);
+}
+#chooseFlashcardList > :nth-child(2n){
+    background-color: rgb(80, 75, 75);
+}
+#chooseFlashcardList > p:hover{
+    scale: 110%;
+}
+#chooseFlashcardList > p:active{
+    scale: 105%;
 }
