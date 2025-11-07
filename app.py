@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 import os, shutil
@@ -44,6 +44,20 @@ else:
 @app.route("/data")
 def data():
     return jsonify(flashcardDict)
+
+@app.route("/receiveArrays", methods=["GET", "POST"])
+def receiveArrays():
+    arrayData = request.get_json()
+    questionArray = arrayData.get("questionArray", [])
+    answerArray = arrayData.get("answerArray", [])
+
+
+    #WIPE MISTAKE FOLDER
+
+    #CREATE NEW JSON FILE FOR MISTAKES
+
+    #return new json file here
+    return jsonify()
 
 if __name__ == "__main__":
     app.run(debug=True)

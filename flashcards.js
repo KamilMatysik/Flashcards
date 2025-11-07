@@ -38,6 +38,8 @@ function onLoadFunction(){
     
     
     flashcard = document.getElementById("mainFlashcard")
+    wrongQuestions = []
+    wrongAnswers = []
     tickAndExClicking()
     addClicksEndPage()
     addFlashcardClick()
@@ -88,6 +90,10 @@ function tickAndExClicking(){
 
     //Clicking the X
     ex.addEventListener("click", function(){
+        /* Everytime X is clicked, add the question and answer to an array */
+        wrongQuestions.push(flashcardSet[current].question)
+        wrongAnswers.push(flashcardSet[current].answer)
+
         flashcard.style.transform = "translateX(200%)";
         incorrectCards++
         document.getElementById("rightCounter").textContent = incorrectCards
@@ -213,5 +219,21 @@ function addClicksEndPage(){
     })
     document.getElementById("resetCards").addEventListener("click", function(){
         window.location.reload()
+    })
+    document.getElementById("continueWithFalse").addEventListener("click", function(){
+        /*
+        Here it has to send a message to flask and thatll tell it to open the file of mistakes
+        Then it will send back the json file, which will be opened here with loadFlashcards
+        */
+       fetch("http://127.0.0.1:5000/receiveArrays", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ questionArray: wrongQuestions, answerArray: wrongAnswers})
+       })
+       .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
     })
 }
