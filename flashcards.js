@@ -1,6 +1,6 @@
 //Async function to read json
 async function loadFlashcards(){
-    response = await fetch("sample.json")
+    response = await fetch("flashcardJSON/sample.json")
     data = await response.json()
     flashcardSet = data.flashcardSet
     current = 0
@@ -9,12 +9,10 @@ async function loadFlashcards(){
     assignQA()
     flashcardCounter()
 }
-loadFlashcards()
 
-flashcard = document.getElementById("mainFlashcard")
+
 var cardFlipTime = 150
-//Enables clicks
-addFlashcardClick()
+
 
 let correctCards = 0
 let incorrectCards = 0
@@ -26,6 +24,10 @@ ex = document.getElementById("ex");
 
 //This is done on load
 function onLoadFunction(){
+    loadFlashcards()
+    flashcard = document.getElementById("mainFlashcard")
+    tickAndExClicking()
+    addFlashcardClick()
     nextFlashcard = document.getElementById("nextFlashcard")
     nextFlashcard.style.transition = "none"
     setTimeout(returnTransition,200)
@@ -59,27 +61,29 @@ function addFlashcardClick(){
     });
 }
 
-//Clicking the tick
-tick.addEventListener("click", function(){
-    flashcard.style.transform = "translateX(-200%)";
-    correctCards++
-    document.getElementById("leftCounter").textContent = correctCards   
-    setTimeout(() => {
-        removeCard();
-        lowerCard();
-    }, 250);
-});
+function tickAndExClicking(){
+    //Clicking the tick
+    tick.addEventListener("click", function(){
+        flashcard.style.transform = "translateX(-200%)";
+        correctCards++
+        document.getElementById("leftCounter").textContent = correctCards   
+        setTimeout(() => {
+            removeCard();
+            lowerCard();
+        }, 250);
+    });
 
-//Clicking the X
-ex.addEventListener("click", function(){
-    flashcard.style.transform = "translateX(200%)";
-    incorrectCards++
-    document.getElementById("rightCounter").textContent = incorrectCards
-    setTimeout(() => {
-        removeCard();
-        lowerCard();
-    }, 250);
-});
+    //Clicking the X
+    ex.addEventListener("click", function(){
+        flashcard.style.transform = "translateX(200%)";
+        incorrectCards++
+        document.getElementById("rightCounter").textContent = incorrectCards
+        setTimeout(() => {
+            removeCard();
+            lowerCard();
+        }, 250);
+    });
+}
 
 //Delete card
 function removeCard(){
@@ -169,24 +173,23 @@ async function chooseFlashcardLoad(){
         const jsonData = await response.json()
         addFlashcardsToList(jsonData)
     } catch (error) {
-        console.error("Error fetching data: ", error)
+        
     }
+
 }
 
 function addFlashcardsToList(data){
-    for (let i = 0; i < 100; i++){
+    for (let i = 0; i < 5; i++){
         currentFile = data["index"+String(i+1)]
         currentFileName = currentFile.split(".")[0]
-        currentFileName = currentFileName.charAt(0).toUpperCase() + currentFileName.slice(1)
 
         //After this, we have the name of the file ready to be put into html
         flashcardList = document.getElementById("chooseFlashcardList")
         flashcardList.innerHTML +=`<p id="flashcardID${i}">${currentFileName}</p>`
     }
 }
+document.getElementById("chooseFlashcardList").addEventListener("click", function(){
+    let fileToOpen = event.target.id
+    let fullFileName = document.getElementById(fileToOpen).textContent + ".json"
 
-document.getElementById("chooseFlashcardList").addEventListener("click", function(event){
-    fileToChooseIndex = event.target.id
-
-    console.log(fileToChooseIndex)
 })
