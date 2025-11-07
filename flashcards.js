@@ -24,7 +24,6 @@ async function loadFlashcards(fileName){
 
 //This is done on load of flashcards file
 function onLoadFunction(){
-    
     const path = window.location.pathname;
     const file = path.split("/").pop();
 
@@ -40,6 +39,7 @@ function onLoadFunction(){
     
     flashcard = document.getElementById("mainFlashcard")
     tickAndExClicking()
+    addClicksEndPage()
     addFlashcardClick()
     nextFlashcard = document.getElementById("nextFlashcard")
     nextFlashcard.style.transition = "none"
@@ -206,3 +206,12 @@ document.getElementById("chooseFlashcardList").addEventListener("click", functio
     let fullFileName = document.getElementById(fileToOpen).textContent + ".json"
     window.location.href = "flashcards.html?file=" + fullFileName
 })
+
+function addClicksEndPage(){
+    document.getElementById("changeSet").addEventListener("click", function(){
+        window.location.href = "index.html"
+    })
+    document.getElementById("resetCards").addEventListener("click", function(){
+        window.location.reload()
+    })
+}
