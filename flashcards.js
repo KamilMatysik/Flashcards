@@ -1,16 +1,3 @@
-//Async function to read json
-async function loadFlashcards(){
-    response = await fetch("flashcardJSON/sample.json")
-    data = await response.json()
-    flashcardSet = data.flashcardSet
-    current = 0
-    document.getElementById("mainFlashcardQuestion").textContent = flashcardSet[current].question
-    document.getElementById("mainFlashcardAnswer").textContent = flashcardSet[current].answer
-    assignQA()
-    flashcardCounter()
-}
-
-
 var cardFlipTime = 150
 
 
@@ -22,9 +9,35 @@ dontCreateNew = false
 tick = document.getElementById("tick");
 ex = document.getElementById("ex");
 
-//This is done on load
+//Async function to read json
+async function loadFlashcards(fileName){
+    FFN = "flashcardJSON/" + fileName 
+    response = await fetch(FFN)
+    data = await response.json()
+    flashcardSet = data.flashcardSet
+    current = 0
+    document.getElementById("mainFlashcardQuestion").textContent = flashcardSet[current].question
+    document.getElementById("mainFlashcardAnswer").textContent = flashcardSet[current].answer
+    assignQA()
+    flashcardCounter()
+}
+
+//This is done on load of flashcards file
 function onLoadFunction(){
-    loadFlashcards()
+    
+    const path = window.location.pathname;
+    const file = path.split("/").pop();
+
+
+    if (file === "flashcards.html") {
+        const params = new URLSearchParams(window.location.search)
+        const fileName = params.get("file")
+    if (fileName) {
+      loadFlashcards(fileName)
+    }
+    }
+    
+    
     flashcard = document.getElementById("mainFlashcard")
     tickAndExClicking()
     addFlashcardClick()
@@ -191,5 +204,5 @@ function addFlashcardsToList(data){
 document.getElementById("chooseFlashcardList").addEventListener("click", function(){
     let fileToOpen = event.target.id
     let fullFileName = document.getElementById(fileToOpen).textContent + ".json"
-
+    window.location.href = "flashcards.html?file=" + fullFileName
 })
