@@ -207,12 +207,13 @@ function addFlashcardsToList(data){
         flashcardList.innerHTML +=`<p id="flashcardID${i}">${currentFileName}</p>`
     }
 }
-document.getElementById("chooseFlashcardList").addEventListener("click", function(){
+document.getElementById("chooseFlashcardList").addEventListener("click", function(event){
     let fileToOpen = event.target.id
     let fullFileName = document.getElementById(fileToOpen).textContent + ".json"
     window.location.href = "flashcards.html?file=" + fullFileName
 })
 
+//STILL REFRESHES, ADD GET REQUEST
 function addClicksEndPage(){
     document.getElementById("changeSet").addEventListener("click", function(){
         window.location.href = "index.html"
@@ -220,20 +221,28 @@ function addClicksEndPage(){
     document.getElementById("resetCards").addEventListener("click", function(){
         window.location.reload()
     })
-    document.getElementById("continueWithFalse").addEventListener("click", function(){
-        /*
-        Here it has to send a message to flask and thatll tell it to open the file of mistakes
-        Then it will send back the json file, which will be opened here with loadFlashcards
-        */
-       fetch("http://127.0.0.1:5000/receiveArrays", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ questionArray: wrongQuestions, answerArray: wrongAnswers})
+    document.getElementById("continueWithFalse").addEventListener("click", async (event) => {
+        event.stopPropagation()
+        event.preventDefault()
+
+        try{
+            const res = await fetch("http://127.0.0.1:5000/receiveArrays", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            //this sends the data to flask
+            body: JSON.stringify({ questionArray: wrongQuestions, answerArray: wrongAnswers})
        })
-       .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(err => console.error(err));
+
+        if (!res.ok) throw new Error("Response error")
+
+        const mistakeData = await res.json()
+        console.log(mistakeData)
+
+        loadFlashcards("currentMistakes.json")
+    } catch(error){
+        console.log("error: ", error)
+    }
     })
 }

@@ -1,10 +1,12 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import json
 
 import os, shutil
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
+dt = {}
 
 
 if not os.path.isdir("nonJSONWaste"):
@@ -51,13 +53,32 @@ def receiveArrays():
     questionArray = arrayData.get("questionArray", [])
     answerArray = arrayData.get("answerArray", [])
 
+    #This resets the folder if it exists, or creates it if not
+    if not os.path.isdir("continueMistakes"):
+        os.mkdir("continueMistakes")
+    else:
+        for root, dirs, files in os.walk("continueMistakes/"):
+            for f in files:
+                os.remove(os.path.join(root, f))
+            for d in dirs:
+                shutil.rmtree(os.path.join(root, d))
+        
+    #check to ensure atleast 1 thing is in json
+    if len(questionArray) == 0 or len(answerArray) == 0:
+        return jsonify({})
+    
+    cards = [{"question": q, "answer": a} for q, a in zip(questionArray, answerArray)]
 
-    #WIPE MISTAKE FOLDER
+    dt = {"flashcardSet": cards}
 
-    #CREATE NEW JSON FILE FOR MISTAKES
+
+    #need to create new json file here
+    with open("currentMistakes.json", "w") as fp:
+        json.dump(dt, fp, indent=2)
+        
 
     #return new json file here
-    return jsonify()
+    return jsonify(filename="currentMistakes.json")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
