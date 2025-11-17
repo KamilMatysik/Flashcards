@@ -1,5 +1,6 @@
 var cardFlipTime = 150
 
+let mistakesFile = "currentMistakes.json"
 
 let correctCards = 0
 let incorrectCards = 0
@@ -11,13 +12,27 @@ ex = document.getElementById("ex");
 
 //Async function to read json
 async function loadFlashcards(fileName){
-    FFN = "flashcardJSON/" + fileName 
+    if (fileName === mistakesFile){
+        FFN = fileName
+    }
+    else{
+        FFN = "flashcardJSON/" + fileName 
+    }
     response = await fetch(FFN)
     data = await response.json()
     flashcardSet = data.flashcardSet
     current = 0
+
+    /* THESE 2 LINES ARE STOPPING THE CODE AFTER THEM FROM
+    WORKING AS INTENDED, BUT WHEN COMMENTED OUT, IT STILL DOES
+    NOT WORK AS INTENDED
+    1. FIX THESE 2 SO CODE AFTER IS NOT STOPPED
+    2. FOLLOW FUNCTIONS WITH CONSOLE.LOGS UNTIL YOU FIND
+    THE PROBLEM, AND WHY IT DOES NOT WORK
+     */
     document.getElementById("mainFlashcardQuestion").textContent = flashcardSet[current].question
     document.getElementById("mainFlashcardAnswer").textContent = flashcardSet[current].answer
+
     assignQA()
     flashcardCounter()
 }
@@ -106,7 +121,10 @@ function tickAndExClicking(){
 
 //Delete card
 function removeCard(){
-    flashcard.remove();
+    if(!dontCreateNew){
+        flashcard.remove();
+        console.log("hi")
+    }
 }
 
 //Lowers next card plus makes it the main card
@@ -161,10 +179,12 @@ function assignQA(){
     document.getElementById("nextFlashcardAnswer").textContent = flashcardSet[current+1].answer
 }
 
+//Counts which flashcard its on
 function flashcardCounter(){
     document.querySelector(".flashcardCounter").textContent = `- ${current+1} / ${flashcardSet.length} -`
 }
 
+//Checks if current flashcard is the last one
 function checkForLast(){
     if(current == flashcardSet.length){
         noNext = true
@@ -174,6 +194,7 @@ function checkForLast(){
     }
 }
 
+//Controls screen at the end of flashcards
 function endScreen(){
     document.getElementById("choices").style.opacity = "0%"
     document.getElementById("leftRightCounters").style.opacity = "0%"
@@ -181,8 +202,6 @@ function endScreen(){
     endScreen.style.opacity = "100%"
     endScreen.style.pointerEvents = "all"
 }
-
-
 
 //Code For Choosing Flashcard File
 async function chooseFlashcardLoad(){
@@ -197,6 +216,7 @@ async function chooseFlashcardLoad(){
 
 }
 
+//Lists flashcards in folder
 function addFlashcardsToList(data){
     for (let i = 0; i < 5; i++){
         currentFile = data["index"+String(i+1)]
@@ -207,13 +227,14 @@ function addFlashcardsToList(data){
         flashcardList.innerHTML +=`<p id="flashcardID${i}">${currentFileName}</p>`
     }
 }
+//Lets user choose a flashcard file
 document.getElementById("chooseFlashcardList").addEventListener("click", function(event){
     let fileToOpen = event.target.id
     let fullFileName = document.getElementById(fileToOpen).textContent + ".json"
     window.location.href = "flashcards.html?file=" + fullFileName
 })
 
-//STILL REFRESHES, ADD GET REQUEST
+//This controls the choices on the end screen
 function addClicksEndPage(){
     document.getElementById("changeSet").addEventListener("click", function(){
         window.location.href = "index.html"
@@ -237,10 +258,8 @@ function addClicksEndPage(){
 
         if (!res.ok) throw new Error("Response error")
 
-        const mistakeData = await res.json()
-        console.log(mistakeData)
-
-        loadFlashcards("currentMistakes.json")
+        //This function runs, but there is a problem in it
+        loadFlashcards(mistakesFile)
     } catch(error){
         console.log("error: ", error)
     }
