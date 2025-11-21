@@ -23,15 +23,11 @@ async function loadFlashcards(fileName){
     flashcardSet = data.flashcardSet
     current = 0
 
-    /* THESE 2 LINES ARE STOPPING THE CODE AFTER THEM FROM
-    WORKING AS INTENDED, BUT WHEN COMMENTED OUT, IT STILL DOES
-    NOT WORK AS INTENDED
-    1. FIX THESE 2 SO CODE AFTER IS NOT STOPPED
-    2. FOLLOW FUNCTIONS WITH CONSOLE.LOGS UNTIL YOU FIND
-    THE PROBLEM, AND WHY IT DOES NOT WORK
-     */
-    document.getElementById("mainFlashcardQuestion").textContent = flashcardSet[current].question
-    document.getElementById("mainFlashcardAnswer").textContent = flashcardSet[current].answer
+
+    if(document.getElementById("endScreen").style.opacity !== "1"){
+        document.getElementById("mainFlashcardQuestion").textContent = flashcardSet[current].question
+        document.getElementById("mainFlashcardAnswer").textContent = flashcardSet[current].answer
+    }
 
     assignQA()
     flashcardCounter()
@@ -123,7 +119,6 @@ function tickAndExClicking(){
 function removeCard(){
     if(!dontCreateNew){
         flashcard.remove();
-        console.log("hi")
     }
 }
 
@@ -175,8 +170,10 @@ function createNextCard(){
 
 //Assigns question and answer to flashcard
 function assignQA(){
-    document.getElementById("nextFlashcardQuestion").textContent = flashcardSet[current+1].question
-    document.getElementById("nextFlashcardAnswer").textContent = flashcardSet[current+1].answer
+    if(document.getElementById("endScreen").style.opacity !== "1"){
+        document.getElementById("nextFlashcardQuestion").textContent = flashcardSet[current+1].question
+        document.getElementById("nextFlashcardAnswer").textContent = flashcardSet[current+1].answer
+    }
 }
 
 //Counts which flashcard its on
@@ -228,11 +225,13 @@ function addFlashcardsToList(data){
     }
 }
 //Lets user choose a flashcard file
-document.getElementById("chooseFlashcardList").addEventListener("click", function(event){
-    let fileToOpen = event.target.id
-    let fullFileName = document.getElementById(fileToOpen).textContent + ".json"
-    window.location.href = "flashcards.html?file=" + fullFileName
-})
+if (window.location.pathname === "/index.html"){
+    document.getElementById("chooseFlashcardList").addEventListener("click", function(event){
+        let fileToOpen = event.target.id
+        let fullFileName = document.getElementById(fileToOpen).textContent + ".json"
+        window.location.href = "flashcards.html?file=" + fullFileName + "&main="+fullFileName
+    })
+}
 
 //This controls the choices on the end screen
 function addClicksEndPage(){
@@ -240,7 +239,9 @@ function addClicksEndPage(){
         window.location.href = "index.html"
     })
     document.getElementById("resetCards").addEventListener("click", function(){
-        window.location.reload()
+        const refreshToMain = new URLSearchParams(window.location.search)
+        const mainFile = refreshToMain.get("main")
+        window.location.href = "flashcards.html?file=" + mainFile + "&main=" + mainFile
     })
     document.getElementById("continueWithFalse").addEventListener("click", async (event) => {
         event.stopPropagation()
@@ -258,8 +259,9 @@ function addClicksEndPage(){
 
         if (!res.ok) throw new Error("Response error")
 
-        //This function runs, but there is a problem in it
-        loadFlashcards(mistakesFile)
+        const getMain = new URLSearchParams(window.location.search)
+        const mainFile = getMain.get("main")
+        window.location.href = "flashcards.html?file=" + mistakesFile + "&main=" + mainFile
     } catch(error){
         console.log("error: ", error)
     }
