@@ -1,0 +1,34 @@
+<!--
+PLAN FOR THIS FILE:
+-Create initial div, and when user wants they can create another +++
+-If they save with empty divs, ignore them (if only 1 field is empty then prompt error)
+-Allow for editing of exisitng files (For loop)
+-Have a save button that, when they try to leave without pressing warn them
+-Have discard button that reverts exactly to last save
+-Link to index.html (and make link from there to here)
+-On index.html, have button beside each file that says edit
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Flashcards</title>
+    <link rel="stylesheet" href="flashcards.css">
+</head>
+<body>
+    <div id="moreQuestions">+</div>
+    <div id="inputDiv">
+        <input id="question">
+        <input id="answer">
+    </div>
+    <div id="extraButtons">
+        <div id="saveChanges">Save Changes</div>
+        <div id="discardChanges">Discard Changes</div>
+    </div>
+    
+    <script src="flashcards.js"></script>
+</body>
+</html>

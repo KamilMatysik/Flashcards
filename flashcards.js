@@ -1,29 +1,31 @@
+//Declaring some global variables
 var cardFlipTime = 150
-
 let mistakesFile = "currentMistakes.json"
-
 let correctCards = 0
 let incorrectCards = 0
-
 noNext = false
 dontCreateNew = false
 tick = document.getElementById("tick");
 ex = document.getElementById("ex");
 
+
 //Async function to read json
 async function loadFlashcards(fileName){
+    /* Since the mistakes file is held in a different folder, if it is the file being accessed then the path needs to be different */
     if (fileName === mistakesFile){
         FFN = fileName
     }
     else{
         FFN = "flashcardJSON/" + fileName 
     }
+    //Fetches the JSON file
     response = await fetch(FFN)
     data = await response.json()
+    //FlashcardSet now holds the data from the JSON
     flashcardSet = data.flashcardSet
     current = 0
 
-
+    //If the end screen is up, then assigning these creates errors since the flashcards are gone by then
     if(document.getElementById("endScreen").style.opacity !== "1"){
         document.getElementById("mainFlashcardQuestion").textContent = flashcardSet[current].question
         document.getElementById("mainFlashcardAnswer").textContent = flashcardSet[current].answer
@@ -35,19 +37,22 @@ async function loadFlashcards(fileName){
 
 //This is done on load of flashcards file
 function onLoadFunction(){
+    //Getting the name of current html file open since multiple share same script file
     const path = window.location.pathname;
     const file = path.split("/").pop();
 
 
     if (file === "flashcards.html") {
+        //Current file being used is stored in URL so this checks that
         const params = new URLSearchParams(window.location.search)
         const fileName = params.get("file")
     if (fileName) {
+        //This takes the fileName gotten previously and loads it through this function
       loadFlashcards(fileName)
     }
     }
     
-    
+    //Assigning some variables once the file loads
     flashcard = document.getElementById("mainFlashcard")
     wrongQuestions = []
     wrongAnswers = []
@@ -66,6 +71,7 @@ function returnTransition(){
 
 //This handles when flashcards are clicked
 function addFlashcardClick(){
+    //All flipping of flashcards is handled in here
     flashcard.addEventListener("click", function(){
     document.querySelector(".flashcardCounter").style.display = "none"
     if(flashcard.classList.contains("flipped")){
@@ -92,11 +98,14 @@ function tickAndExClicking(){
     tick.addEventListener("click", function(){
         flashcard.style.transform = "translateX(-200%)";
         correctCards++
-        document.getElementById("leftCounter").textContent = correctCards   
+        document.getElementById("leftCounter").textContent = correctCards
+        tick.style.pointerEvents = "none"   
+        ex.style.pointerEvents = "none"
         setTimeout(() => {
             removeCard();
             lowerCard();
         }, 250);
+        setTimeout(returnExAndTickClick, 450)
     });
 
     //Clicking the X
@@ -108,10 +117,13 @@ function tickAndExClicking(){
         flashcard.style.transform = "translateX(200%)";
         incorrectCards++
         document.getElementById("rightCounter").textContent = incorrectCards
+        tick.style.pointerEvents = "none"
+        ex.style.pointerEvents = "none"
         setTimeout(() => {
             removeCard();
             lowerCard();
         }, 250);
+        setTimeout(returnExAndTickClick, 450)
     });
 }
 
@@ -151,6 +163,12 @@ function lowerCard(){
         
 }
 
+//Returns clicking to tick and ex
+function returnExAndTickClick(){
+    tick.style.pointerEvents = "all"
+    ex.style.pointerEvents = "all"
+}
+
 //Creates the next card that will come down
 function createNextCard(){
     newFlashcard = document.createElement("div")
@@ -171,6 +189,7 @@ function createNextCard(){
 //Assigns question and answer to flashcard
 function assignQA(){
     if(document.getElementById("endScreen").style.opacity !== "1"){
+        //Uses the data from JSON to assign questions and answers to the next flashcard in line
         document.getElementById("nextFlashcardQuestion").textContent = flashcardSet[current+1].question
         document.getElementById("nextFlashcardAnswer").textContent = flashcardSet[current+1].answer
     }
@@ -202,6 +221,7 @@ function endScreen(){
 
 //Code For Choosing Flashcard File
 async function chooseFlashcardLoad(){
+    //Receives list of file names of available flashcards from flask and then loads them into a function that will list them
     try{
         const response = await fetch("http://127.0.0.1:5000/data")
         if (!response.ok) throw new Error("Response Error")
@@ -215,6 +235,7 @@ async function chooseFlashcardLoad(){
 
 //Lists flashcards in folder
 function addFlashcardsToList(data){
+    //For each file in the folder of flashcard files, it gets its name so that it can input it into html
     for (let i = 0; i < 5; i++){
         currentFile = data["index"+String(i+1)]
         currentFileName = currentFile.split(".")[0]
@@ -226,23 +247,28 @@ function addFlashcardsToList(data){
 }
 //Lets user choose a flashcard file
 if (window.location.pathname === "/index.html"){
+    //This uses the URl to store the name of the JSON file
     document.getElementById("chooseFlashcardList").addEventListener("click", function(event){
         let fileToOpen = event.target.id
         let fullFileName = document.getElementById(fileToOpen).textContent + ".json"
+        //It stores it twice as 'file' will change, but the original should be remembered
         window.location.href = "flashcards.html?file=" + fullFileName + "&main="+fullFileName
     })
 }
 
 //This controls the choices on the end screen
 function addClicksEndPage(){
+    //If user wants to change flashcard sets, it brings them back to where that is possible
     document.getElementById("changeSet").addEventListener("click", function(){
         window.location.href = "index.html"
     })
+    //If user wants to reset the current set, it uses the previously saved main file name and opens it
     document.getElementById("resetCards").addEventListener("click", function(){
         const refreshToMain = new URLSearchParams(window.location.search)
         const mainFile = refreshToMain.get("main")
         window.location.href = "flashcards.html?file=" + mainFile + "&main=" + mainFile
     })
+    //If the user wants to continue with their mistakes, it sends the data of the mistakes made to flask...
     document.getElementById("continueWithFalse").addEventListener("click", async (event) => {
         event.stopPropagation()
         event.preventDefault()
@@ -257,7 +283,7 @@ function addClicksEndPage(){
             body: JSON.stringify({ questionArray: wrongQuestions, answerArray: wrongAnswers})
        })
 
-
+    //.., flask then formats this into a JSON file which can be accessed here, but first program needs to be sure that mistakes exist in the first place
         let emptyCheck = ""
     try {
         emptyCheck = await res.json()
@@ -270,7 +296,7 @@ function addClicksEndPage(){
     }
 
         if (!res.ok) throw new Error("Response error")
-
+        //Once again using the URL to store current file, but ensuring to still keep main file for when user wants to reset the set
         const getMain = new URLSearchParams(window.location.search)
         const mainFile = getMain.get("main")
         window.location.href = "flashcards.html?file=" + mistakesFile + "&main=" + mainFile
@@ -279,12 +305,13 @@ function addClicksEndPage(){
     }
     })
 }
+
 //Quick custom pop-up for when user has no mistakes but wants to continue with mistakes
 function noMistakes(){
     document.getElementById("noMistakesPopup").style.transform = "translateX(0%)"
     setTimeout(noMistakesReturn, 2000)
 }
-
+//And this just makes it disappear after a small cooldown
 function noMistakesReturn(){
     document.getElementById("noMistakesPopup").style.transform = "translateX(120%)"
 }
