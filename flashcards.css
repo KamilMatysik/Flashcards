@@ -14,6 +14,7 @@
     --tickColor2: rgb(134, 180, 64);
     --exColor1: red;
     --exColor2: rgb(206, 63, 63);
+    --endScreenMain: rgb(65, 63, 63);
     --endScreenCompliment: rgb(226, 223, 223);
 
     /* Transitions */
@@ -214,7 +215,7 @@ body{
     border-top-right-radius: 4em;
 }
 #curveBorderJoin{
-    background-color: rgb(65, 63, 63);
+    background-color: var(--endScreenMain);
     width: 75%;
     height: 5%;
     position: fixed;
@@ -302,4 +303,24 @@ body{
 }
 #chooseFlashcardList > p:active{
     scale: 105%;
+}
+
+#noMistakesPopup{
+    position: absolute;
+    right: 2%;
+    background-color: var(--endScreenMain);
+    height: 10%;
+    width: 10%;
+    font-size: 1em;
+    font-family: breeSerif;
+    color: var(--endScreenCompliment);
+    border: solid 2px var(--endScreenCompliment);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+
+    transform: translateX(120%);
+    transition: transform linear 0.1s;
 }

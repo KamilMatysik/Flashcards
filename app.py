@@ -53,19 +53,10 @@ def receiveArrays():
     questionArray = arrayData.get("questionArray", [])
     answerArray = arrayData.get("answerArray", [])
 
-    #This resets the folder if it exists, or creates it if not
-    if not os.path.isdir("continueMistakes"):
-        os.mkdir("continueMistakes")
-    else:
-        for root, dirs, files in os.walk("continueMistakes/"):
-            for f in files:
-                os.remove(os.path.join(root, f))
-            for d in dirs:
-                shutil.rmtree(os.path.join(root, d))
         
     #check to ensure atleast 1 thing is in json
     if len(questionArray) == 0 or len(answerArray) == 0:
-        return jsonify({})
+        return jsonify({"empty":"true"})
     
     cards = [{"question": q, "answer": a} for q, a in zip(questionArray, answerArray)]
 
@@ -78,7 +69,7 @@ def receiveArrays():
         
 
     #return new json file here
-    return jsonify(filename="currentMistakes.json")
+    return jsonify({"empty":"false"})
 
 if __name__ == "__main__":
     app.run(debug=False)

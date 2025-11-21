@@ -257,6 +257,18 @@ function addClicksEndPage(){
             body: JSON.stringify({ questionArray: wrongQuestions, answerArray: wrongAnswers})
        })
 
+
+        let emptyCheck = ""
+    try {
+        emptyCheck = await res.json()
+    } catch (error) {
+        console.log("Error:", error)
+    }
+    if(emptyCheck.empty === "true"){
+        noMistakes()
+        return
+    }
+
         if (!res.ok) throw new Error("Response error")
 
         const getMain = new URLSearchParams(window.location.search)
@@ -266,4 +278,13 @@ function addClicksEndPage(){
         console.log("error: ", error)
     }
     })
+}
+//Quick custom pop-up for when user has no mistakes but wants to continue with mistakes
+function noMistakes(){
+    document.getElementById("noMistakesPopup").style.transform = "translateX(0%)"
+    setTimeout(noMistakesReturn, 2000)
+}
+
+function noMistakesReturn(){
+    document.getElementById("noMistakesPopup").style.transform = "translateX(120%)"
 }

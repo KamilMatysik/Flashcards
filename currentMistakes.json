@@ -1,12 +1,28 @@
 {
   "flashcardSet": [
     {
-      "question": "What is the largest continent in the world?",
-      "answer": "Asia"
+      "question": "What does JSON stand for?",
+      "answer": "JavaScript Object Notation"
     },
     {
-      "question": "Which country has the most natural lakes?",
-      "answer": "Canada"
+      "question": "What does JSON stand for?",
+      "answer": "JavaScript Object Notation"
+    },
+    {
+      "question": "What does JSON stand for?",
+      "answer": "JavaScript Object Notation"
+    },
+    {
+      "question": "What does JSON stand for?",
+      "answer": "JavaScript Object Notation"
+    },
+    {
+      "question": "Which method converts a JavaScript object into a JSON string?",
+      "answer": "JSON.stringify()"
+    },
+    {
+      "question": "Which method converts a JavaScript object into a JSON string?",
+      "answer": "JSON.stringify()"
     }
   ]
 }
