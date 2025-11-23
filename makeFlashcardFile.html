@@ -19,16 +19,31 @@ PLAN FOR THIS FILE:
     <link rel="stylesheet" href="flashcards.css">
 </head>
 <body>
-    <div id="moreQuestions">+</div>
-    <div id="inputDiv">
-        <input id="question">
-        <input id="answer">
-    </div>
-    <div id="extraButtons">
-        <div id="saveChanges">Save Changes</div>
-        <div id="discardChanges">Discard Changes</div>
-    </div>
+    <div id="makeFlashcardFlex">
+        <div class="makeFlashcard" id="makeFlashcard1">
+            <div class="inputDiv">
+                <textarea class="makeQuestion inputFields"></textarea>
+                <textarea class="makeAnswer inputFields"></textarea>
+            </div>
+        </div>
+
+        <div class="makeFlashcard" id="makeFlashcard2">
+            <div class="inputDiv">
+                <textarea class="makeQuestion inputFields"></textarea>
+                <textarea class="makeAnswer inputFields"></textarea>
+            </div>
+        </div>
+
     
+    
+        <!-- + to add more flashcards -->
+        <div id="moreQuestions">+</div>
+
+        <div class="extraButtons">
+                    <div class="saveChanges">Save Changes</div>
+                    <div class="discardChanges">Discard Changes</div>
+                </div>
+    </div>
     <script src="flashcards.js"></script>
 </body>
 </html>

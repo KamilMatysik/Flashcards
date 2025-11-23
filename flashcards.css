@@ -333,5 +333,44 @@ body{
 /* #endregion Choose Flashcard Set */
 
 /* #region Create Flashcard Set */
+#makeFlashcardFlex{
+    display: flex;
+    flex-direction: column;
+}
+#moreQuestions{
+    position: relative;
+}
+.makeFlashcard{
+    background-color: var(--endScreenMain);
+    color: var(--endScreenCompliment);
+    width: 80vw;
+    height: 15vw;
+    left: 10vw;
+    position:relative;
+    margin-top: 3vw;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: var(--endScreenCompliment) 5px solid;
+    border-radius: 20px;
+}
+.inputDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+}
+.inputFields{
+    height: 7vw;
+    width: 40%;
+    background-color: var(--endScreenCompliment);
+    color: var(--endScreenMain);
+    overflow: auto;
+    resize: none;
+    font-size: 1.2em;
+    border-radius: 30px;
+    padding: 1%;
+}
 /* #endregion Create Flashcard Set */
