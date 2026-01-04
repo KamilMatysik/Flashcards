@@ -22,6 +22,9 @@
     --endDisappear: opacity 0.3s linear;
     --chooseFlashcardHColor: background-color 0.1s ease-out;
     --chooseFlashcardHScale: scale 0.1s ease-out;
+
+    --makeFCExtraButtonsScale: scale 0.1s linear;
+    --makeFCExtraButtonsColor: background-color 0.1s linear;
 }
 
 
@@ -29,11 +32,11 @@ body{
     display: grid;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
 
     grid-template-rows: repeat(20, 1fr);
     grid-template-columns: repeat(20, 1fr);
     grid-gap: 0;
-    overflow: hidden;
 
     background-color: #f3cbb4;
 }
@@ -333,9 +336,15 @@ body{
 /* #endregion Choose Flashcard Set */
 
 /* #region Create Flashcard Set */
+#makeFlashcardsBody{
+    overflow-y: scroll;
+}
+
 #makeFlashcardFlex{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 #moreQuestions{
     position: relative;
@@ -371,6 +380,80 @@ body{
     resize: none;
     font-size: 1.2em;
     border-radius: 30px;
-    padding: 1%;
+    padding: 2%;
+}
+.binIcon{
+    fill: #605d5d;
+    position: absolute;
+    top: 3%;
+    right: .7%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    transition: fill 0.1s ease-in, background-color 0.1s ease-out, scale 0.1s ease-in;
+}
+.binIcon:hover{
+    fill: white;
+    background-color: rgb(160, 4, 4);
+    scale: 110%;
+}
+.binIcon:active{
+    background-color: rgb(255, 255, 255);
+    fill: rgb(160, 4, 4);
+    scale: 105%;
+}
+
+#moreQuestions{
+    width: 3.7vw;
+    height: 3.7vw;
+    border: 2px solid var(--endScreenMain);
+    color: var(--endScreenMain);
+    border-radius: 100%;
+    border-width: 2px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4.5vw;
+    padding-bottom: 2px;
+}
+#centerAddedOptions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    left: 10vw;
+    top: 20px;
+    position: relative;
+    margin-top: 1vw;
+    margin-bottom: 3vw;
+}
+#extraButtons{
+    margin-top: 10px;
+}
+#extraButtons > div{
+    margin-top: 10px;
+    
+    border: 2px solid var(--endScreenMain);
+    border-radius: 10px;
+    text-align: center;
+    padding: 3px;
+
+}
+.makeFCExtraButtons{
+    transition: var(--makeFCExtraButtonsScale), var(--makeFCExtraButtonsColor);
+    background-color: var(--endScreenCompliment);
+    user-select: none;
+}
+.makeFCExtraButtons:hover{
+    scale: 110%;
+    cursor: pointer;
+    background-color: rgb(178, 177, 179);
+}
+.makeFCExtraButtons:active{
+    background-color: rgb(100, 100, 100);
 }
 /* #endregion Create Flashcard Set */

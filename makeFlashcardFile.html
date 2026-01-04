@@ -18,31 +18,37 @@ PLAN FOR THIS FILE:
     <title>Make Flashcards</title>
     <link rel="stylesheet" href="flashcards.css">
 </head>
-<body>
+<body onload="makeFlashcardPageLaunch()" id="makeFlashcardsBody">
+    <div id="noMistakesPopup">
+        <p>YOU ONLY HAVE ONE CARD</p>
+    </div>
     <div id="makeFlashcardFlex">
-        <div class="makeFlashcard" id="makeFlashcard1">
-            <div class="inputDiv">
-                <textarea class="makeQuestion inputFields"></textarea>
-                <textarea class="makeAnswer inputFields"></textarea>
-            </div>
-        </div>
-
-        <div class="makeFlashcard" id="makeFlashcard2">
-            <div class="inputDiv">
-                <textarea class="makeQuestion inputFields"></textarea>
-                <textarea class="makeAnswer inputFields"></textarea>
-            </div>
-        </div>
-
-    
-    
-        <!-- + to add more flashcards -->
-        <div id="moreQuestions">+</div>
-
-        <div class="extraButtons">
-                    <div class="saveChanges">Save Changes</div>
-                    <div class="discardChanges">Discard Changes</div>
+        <div id="makeFlashcardHolder">
+            <div class="makeFlashcard" id="makeFlashcard1">
+                <div class="inputDiv">
+                    <textarea placeholder="Enter Question Here:" class="makeQuestion inputFields" id="makeQuestion0"></textarea>
+                    <textarea placeholder="Enter Answer Here:" class="makeAnswer inputFields" id="makeAnswer0"></textarea>
                 </div>
+                <div class="binIcon" id="binIcon0">
+                    <svg id="don0" class="toBinClick" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path id="bon0" class="toBinClick" d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                </div>
+            </div>
+        </div>
+
+
+
+        
+
+    
+        <div id="centerAddedOptions">
+            <!-- + to add more flashcards -->
+            <div class="makeFCExtraButtons" id="moreQuestions">+</div>
+
+            <div id="extraButtons">
+                        <div class="makeFCExtraButtons" id="saveChanges">Save Changes</div>
+                        <div class="makeFCExtraButtons" id="discardChanges">Discard Changes</div>
+                    </div>
+            </div>
     </div>
     <script src="flashcards.js"></script>
 </body>

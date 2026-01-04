@@ -7,6 +7,7 @@ noNext = false
 dontCreateNew = false
 tick = document.getElementById("tick");
 ex = document.getElementById("ex");
+let makeCardCounter = 1
 
 
 //Async function to read json
@@ -314,4 +315,46 @@ function noMistakes(){
 //And this just makes it disappear after a small cooldown
 function noMistakesReturn(){
     document.getElementById("noMistakesPopup").style.transform = "translateX(120%)"
+}
+
+//Functions for making flashcards
+
+//This is called when making flashcard page launches
+function makeFlashcardPageLaunch(){
+    createNewCard()
+}
+//When + is clicked, create new flashcard
+function createNewCard(){
+    document.getElementById("moreQuestions").addEventListener("click", function(){
+        newCard = document.createElement("div")
+        newCard.classList.add("makeFlashcard")
+        newCard.id = `makeFlashcard${makeCardCounter}`
+        newCard.innerHTML = `
+            <div class="inputDiv">
+                <textarea placeholder="Enter Question Here:" class="makeQuestion inputFields" id="makeQuestion${makeCardCounter}"></textarea>
+                <textarea placeholder="Enter Answer Here:" class="makeAnswer inputFields" id="makeAnswer${makeCardCounter}"></textarea>
+            </div>
+            <div class="binIcon" id="binIcon${makeCardCounter}">
+                    <svg id="don${makeCardCounter}" class="toBinClick" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path id="bon${makeCardCounter}" class="toBinClick" d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                </div>`
+
+        document.getElementById("makeFlashcardHolder").append(newCard)
+        makeCardCounter++
+    })
+    document.getElementById("makeFlashcardHolder").addEventListener("click", function(event){
+
+        if(event.target.classList.contains("binIcon") || event.target.classList.contains("toBinClick")){
+            let cardNumber = event.target.id.split("on").at(-1)
+            let cardToDelete = `makeFlashcard${cardNumber}`
+            //Make sure atleast 1 card exists
+            let chilNum = document.getElementById("makeFlashcardHolder").childElementCount
+            if(chilNum > 1){
+                document.getElementById(cardToDelete).remove()
+            }
+            else{
+                //ADD SMALL ERROR EXPLAINER
+                noMistakes()
+            }
+        }
+    })
 }

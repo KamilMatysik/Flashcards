@@ -1,12 +1,40 @@
 {
   "flashcardSet": [
     {
-      "question": "Can JSON store functions or comments?",
-      "answer": "No, JSON can only store data (strings, numbers, arrays, booleans, and objects)"
+      "question": "Which country has the most natural lakes?",
+      "answer": "Canada"
     },
     {
-      "question": "What data type must JSON keys be?",
-      "answer": "Strings"
+      "question": "What is the capital city of Australia?",
+      "answer": "Canberra"
+    },
+    {
+      "question": "Which river is the longest in the world?",
+      "answer": "Nile"
+    },
+    {
+      "question": "Mount Everest is located in which mountain range?",
+      "answer": "Himalayas"
+    },
+    {
+      "question": "Which desert is the largest in the world?",
+      "answer": "Sahara"
+    },
+    {
+      "question": "What is the smallest country by land area?",
+      "answer": "Vatican City"
+    },
+    {
+      "question": "Which ocean is the deepest?",
+      "answer": "Pacific Ocean"
+    },
+    {
+      "question": "Which country is both in Europe and Asia?",
+      "answer": "Russia"
+    },
+    {
+      "question": "What is the capital city of Brazil?",
+      "answer": "Bras\u00edlia"
     }
   ]
 }
