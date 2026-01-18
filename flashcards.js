@@ -9,6 +9,10 @@ tick = document.getElementById("tick");
 ex = document.getElementById("ex");
 let makeCardCounter = 1
 
+const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+const numbers = ['1','2','3','4','5','6','7','8','9','0'];
+const symbols = ['.','_','-'];
+
 
 //Async function to read json
 async function loadFlashcards(fileName){
@@ -255,6 +259,90 @@ if (window.location.pathname === "/index.html"){
         //It stores it twice as 'file' will change, but the original should be remembered
         window.location.href = "flashcards.html?file=" + fullFileName + "&main="+fullFileName
     })
+    document.getElementById("makeSetButton").addEventListener("click", function(){
+        document.getElementById("nameFilePopup").style.opacity = 100
+        document.getElementById("midBackground").style.opacity = 100
+
+        document.getElementById("nameFilePopup").style.pointerEvents = "all"
+        document.getElementById("chooseFlashcardList").style.pointerEvents = "none"
+
+        enablePopupButtons()
+    })
+}
+//This allows user to press buttons accept and reject on the popup
+function enablePopupButtons(){
+    document.getElementById("rejectButton").addEventListener("click", function(){
+        document.getElementById("nameFilePopup").style.opacity = 0
+        document.getElementById("midBackground").style.opacity = 0
+
+        document.getElementById("nameFilePopup").style.pointerEvents = "none"
+        document.getElementById("chooseFlashcardList").style.pointerEvents = "all"
+        document.getElementById("fileName").value = ""
+    })
+    //Needs to check if file name is ok (no special symbols, not too many characters, enough character tho)
+    document.getElementById("acceptButton").addEventListener("click", function(){
+        let inputtedName = document.getElementById("fileName").value
+        let errorField = document.getElementById("nameErrorPopup")
+        let invalidFileName = 0
+        let containsACharacter = 0
+
+        //Ensuring name isnt too short
+        if(inputtedName.length < 4){
+            errorField.innerHTML = "File name needs to be atleast 4 characters"
+            errorField.style.opacity = 100
+            setTimeout(resetText, 4000)
+            return
+        }
+        //Ensuring name isnt too long
+        else if(inputtedName.length > 20){
+            errorField.innerHTML = "File name cannot be longer than 20 characters"
+            errorField.style.opacity = 100
+            setTimeout(resetText, 4000)
+            return
+        }
+        //Ensuring name doesnt contain illegal symbols
+        for(let i = 0; i < inputtedName.length; i++){
+            let wordToCheck = inputtedName[i].toLowerCase()
+            if(numbers.includes(wordToCheck) || alphabet.includes(wordToCheck) || symbols.includes(wordToCheck)){
+                continue
+            }
+            else{
+                invalidFileName = 1
+                break
+            }
+        }
+        if(invalidFileName){
+            errorField.innerHTML = `File can only include no spaces and only the following symbols: .  _  -`
+            errorField.style.opacity = 100
+            setTimeout(resetText, 4000)
+            return
+        }
+        //Ensuring name doesnt end in period or space
+        if((inputtedName[inputtedName.length -1]) == '.'){
+            errorField.innerHTML = "Cannot end file name with a period"
+            errorField.style.opacity = 100
+            setTimeout(resetText, 4000)
+            return
+        }
+        //Ensuring name has atleast one legal character
+        for(let i = 0; i < inputtedName.length; i++){
+            let wordToCheck = inputtedName[i].toLowerCase()
+            if(numbers.includes(wordToCheck) || alphabet.includes(wordToCheck)){
+                break
+            }
+            if(i == inputtedName.length){
+                errorField.innerHTML = "File name must contain atleast one alphanumeric character"
+                errorField.style.opacity = 100
+                setTimeout(resetText, 4000)
+                return
+            }
+
+        }
+    })
+}
+
+function resetText(){
+    document.getElementById("nameErrorPopup").style.opacity = 0
 }
 
 //This controls the choices on the end screen
@@ -322,6 +410,8 @@ function noMistakesReturn(){
 //This is called when making flashcard page launches
 function makeFlashcardPageLaunch(){
     createNewCard()
+    document.getElementById("saveChanges").addEventListener("click", saveChanges)
+    document.getElementById("discardChanges").addEventListener("click", discardChanges)
 }
 //When + is clicked, create new flashcard
 function createNewCard(){
@@ -357,4 +447,14 @@ function createNewCard(){
             }
         }
     })
+}
+
+//Save changes
+function saveChanges(){
+    
+}
+
+//Discard Changes
+function discardChanges(){
+    
 }
