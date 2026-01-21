@@ -9,6 +9,8 @@ tick = document.getElementById("tick");
 ex = document.getElementById("ex");
 let makeCardCounter = 1
 
+let fileSaved = true
+
 const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 const numbers = ['1','2','3','4','5','6','7','8','9','0'];
 const symbols = ['.','_','-'];
@@ -338,6 +340,10 @@ function enablePopupButtons(){
             }
 
         }
+        
+        //IF MORE CHECKS ARE NEEDED, ADD ABOVE THIS
+        //AT THIS POINT, ASSUMED FILE NAME IS VALID
+        createNewFile()
     })
 }
 
@@ -412,6 +418,10 @@ function makeFlashcardPageLaunch(){
     createNewCard()
     document.getElementById("saveChanges").addEventListener("click", saveChanges)
     document.getElementById("discardChanges").addEventListener("click", discardChanges)
+
+    document.addEventListener("keypress", function(){
+        fileSaved = false
+    })
 }
 //When + is clicked, create new flashcard
 function createNewCard(){
@@ -451,10 +461,30 @@ function createNewCard(){
 
 //Save changes
 function saveChanges(){
-    
+    //NEED CODE TO THIS
+    fileSaved = true
 }
 
 //Discard Changes
 function discardChanges(){
     
 }
+
+
+//Create file
+async function createNewFile(){
+    let nameForNewFile = document.getElementById("fileName").value
+    
+    try{
+            await fetch("http://127.0.0.1:5000/makeNewFile", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            //this sends the data to flask
+            body: JSON.stringify({ nameForFile: nameForNewFile})
+       })
+
+}catch (error){
+    console.error(error)
+}}

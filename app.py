@@ -37,9 +37,32 @@ else:
     os.mkdir("flashcardJSON")
     jsonFileCount = 0
 
+#When file name is brought in from js, make a file with that name
+def createNewFile(fileJSON):
+    fileName = fileJSON["nameForFile"]
+    path = "flashcardJSON/"
+    
+    for root, dirs, files in os.walk("flashcardJSON/"):
+        for f in files:
+            names = f.split(".")
+            if names[0] == fileName:
+                fileName = fileName + " (1)"
+    
+                while (fileName+".json") in files:
+                    aftB = fileName.split("(")
+                    num = aftB[-1].split(")")
+                    num = int(num[0])
+                    num+=1
+                    num = str(num)
+                    fileName = aftB[0] + "(" + num + ")"
+                
+
+            fullFileName = fileName + ".json"
+            with open(os.path.join(path, fullFileName), 'w') as fp:
+                pass
 
 
-
+    
 
 
 
@@ -49,6 +72,12 @@ else:
 @app.route("/data")
 def data():
     return jsonify(flashcardDict)
+
+@app.route("/makeNewFile", methods=["POST"])
+def makeNewFile():
+    fileName = request.get_json()
+    createNewFile(fileName)
+    return "", 200
 
 #This first receives 2 arrays of data from JS (users' incorrect answers)
 @app.route("/receiveArrays", methods=["GET", "POST"])

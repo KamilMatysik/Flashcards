@@ -1,28 +1,16 @@
 {
   "flashcardSet": [
     {
-      "question": "What is the largest continent in the world?",
-      "answer": "Asia"
+      "question": "This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long questionThis is a sample for a very long question This is a sample for a very long questionThis is a sample for a very long questionThis is a sample for a very long questionThis is a sample for a very long questionThis is a sample for a very long question",
+      "answer": "No, JSON can only store data (strings, numbers, arrays, booleans, and objects) rrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrr answer answer answeransweransweransweransweranswer answeranswer answer answer answer answer answer answer answeranswer"
     },
     {
-      "question": "Which country has the most natural lakes?",
-      "answer": "Canada"
+      "question": "What does JSON stand for?",
+      "answer": "JavaScript Object Notation"
     },
     {
-      "question": "Mount Everest is located in which mountain range?",
-      "answer": "Himalayas"
-    },
-    {
-      "question": "What is the smallest country by land area?",
-      "answer": "Vatican City"
-    },
-    {
-      "question": "Which country is both in Europe and Asia?",
-      "answer": "Russia"
-    },
-    {
-      "question": "What is the capital city of Brazil?",
-      "answer": "Bras\u00edlia"
+      "question": "Which method converts a JavaScript object into a JSON string?",
+      "answer": "JSON.stringify()"
     }
   ]
 }
