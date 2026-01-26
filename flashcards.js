@@ -1,5 +1,5 @@
 //Declaring some global variables
-var cardFlipTime = 150
+var cardFlipTime = 250
 let mistakesFile = "currentMistakes.json"
 let correctCards = 0
 let incorrectCards = 0
@@ -234,22 +234,23 @@ async function chooseFlashcardLoad(){
         if (!response.ok) throw new Error("Response Error")
         const jsonData = await response.json()
         addFlashcardsToList(jsonData)
+        activateEditButton()
     } catch (error) {
         
     }
 
 }
 
-//Lists flashcards in folder
+//Lists flashcards from folder
 function addFlashcardsToList(data){
     //For each file in the folder of flashcard files, it gets its name so that it can input it into html
-    for (let i = 0; i < 5; i++){
+    for (let i = 0; i < Object.keys(data).length; i++){
         currentFile = data["index"+String(i+1)]
         currentFileName = currentFile.split(".")[0]
 
         //After this, we have the name of the file ready to be put into html
         flashcardList = document.getElementById("chooseFlashcardList")
-        flashcardList.innerHTML +=`<p id="flashcardID${i}">${currentFileName}</p>`
+        flashcardList.innerHTML +=`<p onmouseover="editPopupIn(this)" onmouseout="editPopupOut(this)" id="flashcardID${i}">${currentFileName}</p>`
     }
 }
 //Lets user choose a flashcard file
@@ -271,6 +272,40 @@ if (window.location.pathname === "/index.html"){
         enablePopupButtons()
     })
 }
+
+//Popups for editing files
+function editPopupIn(hovered){
+    let editButton = document.getElementById("editButton")
+    let coords = hovered.getBoundingClientRect() 
+    editButton.style.opacity = 1
+    editButton.style.top = `calc(${coords.top+window.scrollY}px + 1.1vw)`
+}
+function editPopupOut(hovered){
+    let editButton = document.getElementById("editButton")
+    editButton.style.opacity = 0
+}
+function inhover(){
+    document.getElementById("editButton").style.opacity = 1
+}
+function outhover(){
+    document.getElementById("editButton").style.opacity = 0
+}
+function activateEditButton(){
+    document.getElementById("editButton").addEventListener("click", function(event){
+        let x = event.clientX, y = event.clientY
+        let elementList = document.elementsFromPoint(x,y)
+        let fileToEdit = ""
+        for(let i = 0; i < elementList.length; i++){
+            if(elementList[i].tagName == "P"){
+                fileToEdit = elementList[i].innerHTML+".html"
+            }
+        }
+        
+
+        //window.location.href = "makeFlashcardFile.html?file="
+    })
+}
+
 //This allows user to press buttons accept and reject on the popup
 function enablePopupButtons(){
     document.getElementById("rejectButton").addEventListener("click", function(){
@@ -487,4 +522,5 @@ async function createNewFile(){
 
 }catch (error){
     console.error(error)
-}}
+}
+}

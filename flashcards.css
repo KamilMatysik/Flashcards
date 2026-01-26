@@ -60,18 +60,17 @@ body{
     overflow: auto;
     white-space: normal;
 
-
     scrollbar-color: transparent transparent;
 
 
 }
 
 #mainFlashcard{
-    grid-area: 4 / 4/ 17/ 17;
+    grid-area: 4 / 4/ 17/ 18;
     transition: transform 0.25s linear;
 }
 #nextFlashcard{
-    grid-area:1 / 4 / 13 / 17;
+    grid-area:1 / 4 / 13 / 18;
     transform: translateY(-102%);
     transition: transform 0.25s linear;
 }
@@ -84,7 +83,7 @@ body{
     color: white;
     text-align: center;
     font-family: breeSerif;
-    font-size: 2em;
+    font-size: 2.5em;
     margin: 0%;
     padding-bottom: 5%;
 
@@ -107,7 +106,7 @@ body{
 
 /* #region Tick and X */
 #choices{
-    grid-area: 18 / 8 / 20 / 13;
+    grid-area: 18 / 9 / 20 / 13;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -158,12 +157,12 @@ body{
 
 /* #region Left and right counters */
 #leftRightCounters{
-    grid-area: 17 / 4 / 20 / 17;
-    display: grid;
-    grid-template-rows: repeat(20,1fr);
-    grid-template-columns: repeat(20, 1fr);
+    grid-area: 17 / 4 / 20 / 18;
+    display: flex;
     pointer-events: none;
-    transition: var(--endDisappear)
+    transition: var(--endDisappear);
+    align-items: center;
+    justify-content: space-between;
 }
 .leftRightCounters{
     border-radius: 30%;
@@ -173,7 +172,8 @@ body{
     align-items: center;
     justify-content: center;
     color: white;
-    max-width: 100px;
+    height: 100px;
+    width: 100px;
 
     transition: var(--endDisappear);
 }
@@ -369,6 +369,32 @@ body{
 }
 #chooseFlashcardList > p:active{
     scale: 105%;
+}
+
+#editButton{
+    background-color: rgb(109, 179, 109);
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1000px;
+    border: 2px solid black;
+    position: absolute;
+    right: 12.5%;
+    top: 200%;
+    
+
+    transition: scale 0.2s linear, background-color 0.2s linear, opacity 0.1s linear;
+    opacity: 0;
+}
+#editButton:hover{
+    scale: 110%;
+    background-color: #4adf21;
+}
+#editButton:active{
+    scale: 95%;
+    background-color: #25441c;
 }
 #nameFilePopup{
     background-color: rgb(44, 43, 43);

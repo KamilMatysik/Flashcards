@@ -7,35 +7,38 @@ import os, shutil
 app = Flask(__name__)
 #Setting up CORS due to errors without it
 CORS(app, resources={r"/*": {"origins": "*"}})
-#Init var for storing data
-dt = {}
 
-#Creating dir for files in wrong dir so that they aren't deleted instead
-if not os.path.isdir("nonJSONWaste"):
-    os.mkdir("nonJSONWaste")
+def fileCheck():
+    #Init var for storing data
+    dt = {}
 
-flashcardDict  = {}
+    #Creating dir for files in wrong dir so that they aren't deleted instead
+    if not os.path.isdir("nonJSONWaste"):
+        os.mkdir("nonJSONWaste")
 
-if os.path.isdir("flashcardJSON"):
-    jsonFileCount = 0
-    for root, dirs, files in os.walk("flashcardJSON/"):
-        #For each file in the dir, add JSON ones to the count...
-        for f in files:
-            nameList = f.split(".")
-            if nameList[-1] =="json":
-                jsonFileCount += 1
+    flashcardDict  = {}
 
-                flashcardDict.update({f"index{jsonFileCount}": f})
-        #...and move all the ones that shouldn't be there
-            else:
-                fromPath = os.path.join(root, f)
-                toPath = os.path.join("nonJSONWaste", f)
+    if os.path.isdir("flashcardJSON"):
+        jsonFileCount = 0
+        for root, dirs, files in os.walk("flashcardJSON/"):
+            #For each file in the dir, add JSON ones to the count...
+            for f in files:
+                nameList = f.split(".")
+                if nameList[-1] =="json":
+                    jsonFileCount += 1
 
-                shutil.move(fromPath, toPath)
-#If a dir with flashcards does not exist, then create a new one
-else:
-    os.mkdir("flashcardJSON")
-    jsonFileCount = 0
+                    flashcardDict.update({f"index{jsonFileCount}": f})
+            #...and move all the ones that shouldn't be there
+                else:
+                    fromPath = os.path.join(root, f)
+                    toPath = os.path.join("nonJSONWaste", f)
+
+                    shutil.move(fromPath, toPath)
+    #If a dir with flashcards does not exist, then create a new one
+    else:
+        os.mkdir("flashcardJSON")
+        jsonFileCount = 0
+    return flashcardDict
 
 #When file name is brought in from js, make a file with that name
 def createNewFile(fileJSON):
@@ -71,7 +74,7 @@ def createNewFile(fileJSON):
 #This returns the list of files in dir gotten earlier
 @app.route("/data")
 def data():
-    return jsonify(flashcardDict)
+    return jsonify(fileCheck())
 
 @app.route("/makeNewFile", methods=["POST"])
 def makeNewFile():
