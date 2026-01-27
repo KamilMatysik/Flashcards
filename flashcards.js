@@ -297,12 +297,12 @@ function activateEditButton(){
         let fileToEdit = ""
         for(let i = 0; i < elementList.length; i++){
             if(elementList[i].tagName == "P"){
-                fileToEdit = elementList[i].innerHTML+".html"
+                fileToEdit = elementList[i].innerHTML+".json"
             }
         }
         
 
-        //window.location.href = "makeFlashcardFile.html?file="
+        window.location.href = `makeFlashcardFile.html?file=${fileToEdit}`
     })
 }
 
@@ -451,6 +451,7 @@ function noMistakesReturn(){
 //This is called when making flashcard page launches
 function makeFlashcardPageLaunch(){
     createNewCard()
+    setupEditFlashcards()
     document.getElementById("saveChanges").addEventListener("click", saveChanges)
     document.getElementById("discardChanges").addEventListener("click", discardChanges)
 
@@ -524,3 +525,27 @@ async function createNewFile(){
     console.error(error)
 }
 }
+
+//Getting data for file edit
+async function setupEditFlashcards(){
+    //Need to send file name(saved in url) to flask
+    let params = new URLSearchParams(window.location.search)
+    let editFile = params.get("file")
+    
+    
+    //Receive json file
+    try{
+            const res = await fetch("http://127.0.0.1:5000/edit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            //this sends the data to flask
+            body: JSON.stringify({ fileName: editFile})
+       })
+
+    } catch(error){
+        console.log("error: ", error)
+    }
+    }
+

@@ -76,6 +76,24 @@ def createNewFile(fileJSON):
 def data():
     return jsonify(fileCheck())
 
+@app.route("/edit", methods=["GET", "POST"])
+def edit():
+    # search for file
+    sentData = request.get_json()
+    fileName = sentData.get("fileName", [])
+    toOpen = "flashcardJSON/"+fileName
+    editData = ""
+    
+    try:
+        with open(toOpen, "r") as file:
+            editData = json.load(file)
+    except FileNotFoundError:
+        print(f"Error, file not found: {toOpen}")
+
+    
+    #change this to the json file
+    return "hello";
+
 @app.route("/makeNewFile", methods=["POST"])
 def makeNewFile():
     fileName = request.get_json()
