@@ -91,8 +91,8 @@ def edit():
         print(f"Error, file not found: {toOpen}")
 
     
-    #change this to the json file
-    return "hello";
+    
+    return editData;
 
 @app.route("/makeNewFile", methods=["POST"])
 def makeNewFile():

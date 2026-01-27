@@ -532,10 +532,10 @@ async function setupEditFlashcards(){
     let params = new URLSearchParams(window.location.search)
     let editFile = params.get("file")
     
-    
+    let res;
     //Receive json file
     try{
-            const res = await fetch("http://127.0.0.1:5000/edit", {
+            res = await fetch("http://127.0.0.1:5000/edit", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -547,5 +547,30 @@ async function setupEditFlashcards(){
     } catch(error){
         console.log("error: ", error)
     }
+    data = await res.json()
+    fillInTextFields(data.flashcardSet)
+}
+
+function fillInTextFields(data){
+    let defNum = data.length
+    
+    document.getElementById("makeQuestion0").value = data[0].question
+    document.getElementById("makeAnswer0").value = data[0].answer
+
+    for(let i = 1; i < defNum; i++){
+        newCard = document.createElement("div")
+        newCard.classList.add("makeFlashcard")
+        newCard.id = `makeFlashcard${i}`
+        newCard.innerHTML = `
+            <div class="inputDiv">
+                <textarea placeholder="Enter Question Here:" class="makeQuestion inputFields" id="makeQuestion${i}">${data[i].question}</textarea>
+                <textarea placeholder="Enter Answer Here:" class="makeAnswer inputFields" id="makeAnswer${i}">${data[i].answer}</textarea>
+            </div>
+            <div class="binIcon" id="binIcon${i}">
+                    <svg id="don${i}" class="toBinClick" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path id="bon${i}" class="toBinClick" d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                </div>`
+
+        document.getElementById("makeFlashcardHolder").append(newCard)
     }
+}
 
