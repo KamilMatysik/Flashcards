@@ -94,6 +94,21 @@ def edit():
     
     return editData;
 
+@app.route("/saveEdits", methods=["POST", "GET"])
+def saveEdits():
+    data = request.get_json()
+    questionArray = data.get("saveQ")
+    answerArray = data.get("saveA")
+    cards = [{"question": q, "answer": a} for q, a in zip(questionArray, answerArray)]
+    dt = {"flashcardSet": cards}
+
+
+    #need to create new json file here
+    with open("flashcardJSON/" + data.get("fileName"), "w") as fp:
+        json.dump(dt, fp, indent=2)
+    return "", 200
+
+
 @app.route("/makeNewFile", methods=["POST"])
 def makeNewFile():
     fileName = request.get_json()

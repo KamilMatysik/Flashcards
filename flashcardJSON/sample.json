@@ -1,10 +1,6 @@
 {
   "flashcardSet": [
     {
-      "question": "This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long question This is a sample for a very long questionThis is a sample for a very long question This is a sample for a very long questionThis is a sample for a very long questionThis is a sample for a very long questionThis is a sample for a very long questionThis is a sample for a very long question",
-      "answer": "No, JSON can only store data (strings, numbers, arrays, booleans, and objects) rrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr rrrrrrrrrrrrrrrrrrrrrrrr answer answer answeransweransweransweransweranswer answeranswer answer answer answer answer answer answer answeranswer"
-    },
-    {
       "question": "What does JSON stand for?",
       "answer": "JavaScript Object Notation"
     },

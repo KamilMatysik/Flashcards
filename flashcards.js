@@ -8,6 +8,7 @@ dontCreateNew = false
 tick = document.getElementById("tick");
 ex = document.getElementById("ex");
 let makeCardCounter = 1
+let defNum
 
 let fileSaved = true
 
@@ -495,18 +496,6 @@ function createNewCard(){
     })
 }
 
-//Save changes
-function saveChanges(){
-    //NEED CODE TO THIS
-    fileSaved = true
-}
-
-//Discard Changes
-function discardChanges(){
-    
-}
-
-
 //Create file
 async function createNewFile(){
     let nameForNewFile = document.getElementById("fileName").value
@@ -552,7 +541,7 @@ async function setupEditFlashcards(){
 }
 
 function fillInTextFields(data){
-    let defNum = data.length
+    defNum = data.length
     
     document.getElementById("makeQuestion0").value = data[0].question
     document.getElementById("makeAnswer0").value = data[0].answer
@@ -572,5 +561,49 @@ function fillInTextFields(data){
 
         document.getElementById("makeFlashcardHolder").append(newCard)
     }
+
 }
 
+//Save changes
+async function saveChanges(){
+    let saveQuestions = []
+    let saveAnswers = []
+    const check1 = new URLSearchParams(window.location.search)
+    const file1 = check1.get("file")
+    for (i = 0; i < defNum; i++){
+        let qID = document.getElementById(`makeQuestion${i}`)
+        let aID = document.getElementById(`makeAnswer${i}`)
+        if(qID == null || aID == null){
+            continue
+        }
+        saveQuestions.push(qID.value)
+        saveAnswers.push(aID.value)
+    }
+    
+    try{
+            const res = await fetch("http://127.0.0.1:5000/saveEdits", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            //this sends the data to flask
+            body: JSON.stringify({ saveQ: saveQuestions, saveA: saveAnswers, fileName: file1})
+       })
+
+        if (!res.ok) throw new Error("Response error")
+
+        
+        window.location.href = "makeFlashcardFile.html?file=" + file1
+    } catch(error){
+        console.log("error: ", error)
+    }
+
+    fileSaved = true
+}
+    
+
+
+//Discard Changes
+function discardChanges(){
+    
+}

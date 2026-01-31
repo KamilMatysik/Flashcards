@@ -5,8 +5,16 @@
       "answer": "JavaScript Object Notation"
     },
     {
+      "question": "Which method converts a JavaScript object into a JSON string?",
+      "answer": "JSON.stringify()"
+    },
+    {
       "question": "Which method parses a JSON string into a JavaScript object?",
       "answer": "JSON.parse()"
+    },
+    {
+      "question": "Can JSON store functions or comments?",
+      "answer": "No, JSON can only store data (strings, numbers, arrays, booleans, and objects)"
     },
     {
       "question": "What data type must JSON keys be?",
