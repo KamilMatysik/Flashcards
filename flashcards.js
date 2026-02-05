@@ -7,8 +7,8 @@ noNext = false
 dontCreateNew = false
 tick = document.getElementById("tick");
 ex = document.getElementById("ex");
-let makeCardCounter = 1
 let defNum
+let makeCardCounter = 1
 
 let fileSaved = true
 
@@ -451,6 +451,12 @@ function noMistakesReturn(){
 
 //This is called when making flashcard page launches
 function makeFlashcardPageLaunch(){
+    window.addEventListener("beforeunload", function(event){
+        if(!fileSaved){
+            event.returnValue = "Would you like to save before you leave?"
+        }
+    })
+    
     createNewCard()
     setupEditFlashcards()
     document.getElementById("saveChanges").addEventListener("click", saveChanges)
@@ -463,6 +469,8 @@ function makeFlashcardPageLaunch(){
 //When + is clicked, create new flashcard
 function createNewCard(){
     document.getElementById("moreQuestions").addEventListener("click", function(){
+        
+        makeCardCounter = document.getElementById("makeFlashcardHolder").childElementCount
         newCard = document.createElement("div")
         newCard.classList.add("makeFlashcard")
         newCard.id = `makeFlashcard${makeCardCounter}`
@@ -537,6 +545,9 @@ async function setupEditFlashcards(){
         console.log("error: ", error)
     }
     data = await res.json()
+
+    makeCardCounter = data.length
+
     fillInTextFields(data.flashcardSet)
 }
 
@@ -570,8 +581,12 @@ async function saveChanges(){
     let saveAnswers = []
     const check1 = new URLSearchParams(window.location.search)
     const file1 = check1.get("file")
-    for (i = 0; i < defNum; i++){
+
+    let loopNum = document.getElementById("makeFlashcardHolder").childElementCount
+    console.log(loopNum)
+    for (i = 0; i < loopNum; i++){
         let qID = document.getElementById(`makeQuestion${i}`)
+        console.log(qID)
         let aID = document.getElementById(`makeAnswer${i}`)
         if(qID == null || aID == null){
             continue
@@ -600,10 +615,8 @@ async function saveChanges(){
 
     fileSaved = true
 }
-    
-
 
 //Discard Changes
 function discardChanges(){
-    
+    location.reload()
 }
